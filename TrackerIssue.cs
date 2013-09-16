@@ -7,7 +7,7 @@ namespace Inedo.BuildMasterExtensions.CollabNet
     /// Represents an issue in CollabNet's tracker.
     /// </summary>
     [Serializable]
-    public sealed class TrackerIssue : Issue
+    public sealed class TrackerIssue : IssueTrackerIssue
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TrackerIssue"/> class.

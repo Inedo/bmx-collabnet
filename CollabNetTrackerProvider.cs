@@ -129,7 +129,7 @@ namespace Inedo.BuildMasterExtensions.CollabNet
         /// <returns>
         /// The URL of the specified issue if applicable; otherwise null.
         /// </returns>
-        public override string GetIssueUrl(Issue issue)
+        public override string GetIssueUrl(IssueTrackerIssue issue)
         {
             if (issue == null)
                 throw new ArgumentNullException("issue");
@@ -143,7 +143,7 @@ namespace Inedo.BuildMasterExtensions.CollabNet
         /// </summary>
         /// <param name="releaseNumber"></param>
         /// <returns></returns>
-        public override Issue[] GetIssues(string releaseNumber)
+        public override IssueTrackerIssue[] GetIssues(string releaseNumber)
         {
             if (this.CategoryIdFilter == null || this.CategoryIdFilter.Length < 2 || string.IsNullOrEmpty(this.CategoryIdFilter[1]))
                 throw new InvalidOperationException("CollabNet issue tracker has not been specified.");
@@ -189,7 +189,7 @@ namespace Inedo.BuildMasterExtensions.CollabNet
         /// </summary>
         /// <param name="issue"></param>
         /// <returns></returns>
-        public override bool IsIssueClosed(Issue issue)
+        public override bool IsIssueClosed(IssueTrackerIssue issue)
         {
             return ((TrackerIssue)issue).IsClosed;
         }
@@ -247,7 +247,7 @@ namespace Inedo.BuildMasterExtensions.CollabNet
         /// The nesting level (i.e. <see cref="CategoryBase.SubCategories"/>) can never be less than
         /// the length of <see cref="CategoryTypeNames"/>
         /// </remarks>
-        public CategoryBase[] GetCategories()
+        public IssueTrackerCategory[] GetCategories()
         {
             var sessionId = this.CollabNet.login(this.UserName, this.Password);
             if (string.IsNullOrEmpty(sessionId))

@@ -8,7 +8,7 @@ namespace Inedo.BuildMasterExtensions.CollabNet
     /// Represents an issue tracker category for CollabNet.
     /// </summary>
     [Serializable]
-    public sealed class TrackerCategory : CategoryBase
+    public sealed class TrackerCategory : IssueTrackerCategory
     {
         private static readonly TrackerCategory[] EmptyArray = new TrackerCategory[0];
 

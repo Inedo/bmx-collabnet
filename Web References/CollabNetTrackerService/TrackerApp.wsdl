@@ -1,0 +1,1628 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:intf="http://schema.open.collab.net/sfee50/soap50/service" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns1="http://schema.open.collab.net/sfee50/soap50/type" xmlns:impl="http://schema.open.collab.net/sfee50/soap50/service" targetNamespace="http://schema.open.collab.net/sfee50/soap50/service" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://schema.open.collab.net/sfee50/soap50/type">
+      <xsd:import namespace="http://schema.open.collab.net/sfee50/soap50/service" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="ObjectSoapDO" abstract="true">
+        <xsd:sequence>
+          <xsd:element name="createdBy" nillable="true" type="xsd:string" />
+          <xsd:element name="createdDate" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="id" nillable="true" type="xsd:string" />
+          <xsd:element name="lastModifiedBy" nillable="true" type="xsd:string" />
+          <xsd:element name="lastModifiedDate" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="version" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="TrackerFieldValueSoapDO">
+        <xsd:sequence>
+          <xsd:element name="id" nillable="true" type="xsd:string" />
+          <xsd:element name="isDefault" type="xsd:boolean" />
+          <xsd:element name="value" nillable="true" type="xsd:string" />
+          <xsd:element name="valueClass" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="TrackerFieldSoapDO">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns1:ObjectSoapDO">
+            <xsd:sequence>
+              <xsd:element name="defaultTextValue" nillable="true" type="xsd:string" />
+              <xsd:element name="defaultUsernames" nillable="true" type="impl:ArrayOf_xsd_string" />
+              <xsd:element name="disabled" type="xsd:boolean" />
+              <xsd:element name="displayLines" type="xsd:int" />
+              <xsd:element name="displaySize" type="xsd:int" />
+              <xsd:element name="fieldType" nillable="true" type="xsd:string" />
+              <xsd:element name="fieldValues" nillable="true" type="impl:ArrayOf_tns1_TrackerFieldValueSoapDO" />
+              <xsd:element name="hiddenOnCreate" type="xsd:boolean" />
+              <xsd:element name="name" nillable="true" type="xsd:string" />
+              <xsd:element name="required" type="xsd:boolean" />
+              <xsd:element name="userFilter" nillable="true" type="xsd:string" />
+              <xsd:element name="valueType" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="WebServiceFault">
+        <xsd:sequence />
+      </xsd:complexType>
+      <xsd:complexType name="InvalidSessionFault">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns1:WebServiceFault">
+            <xsd:sequence />
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="NoSuchObjectFault">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns1:WebServiceFault">
+            <xsd:sequence />
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="PermissionDeniedFault">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns1:WebServiceFault">
+            <xsd:sequence />
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="SystemFault">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns1:WebServiceFault">
+            <xsd:sequence />
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="VersionMismatchFault">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns1:WebServiceFault">
+            <xsd:sequence />
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="IllegalArgumentFault">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns1:WebServiceFault">
+            <xsd:sequence />
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="InvalidOperationFault">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns1:WebServiceFault">
+            <xsd:sequence />
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="DependencyViolationFault">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns1:WebServiceFault">
+            <xsd:sequence />
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="WorkflowViolationFault">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns1:WebServiceFault">
+            <xsd:sequence />
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="SoapFieldValues">
+        <xsd:sequence>
+          <xsd:element name="names" nillable="true" type="impl:ArrayOf_xsd_string" />
+          <xsd:element name="types" nillable="true" type="impl:ArrayOf_xsd_string" />
+          <xsd:element name="values" nillable="true" type="impl:ArrayOf_xsd_anyType" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ItemSoapDO">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns1:ObjectSoapDO">
+            <xsd:sequence>
+              <xsd:element name="folderId" nillable="true" type="xsd:string" />
+              <xsd:element name="path" nillable="true" type="xsd:string" />
+              <xsd:element name="title" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArtifactSoapDO">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns1:ItemSoapDO">
+            <xsd:sequence>
+              <xsd:element name="actualHours" type="xsd:int" />
+              <xsd:element name="assignedTo" nillable="true" type="xsd:string" />
+              <xsd:element name="category" nillable="true" type="xsd:string" />
+              <xsd:element name="closeDate" nillable="true" type="xsd:dateTime" />
+              <xsd:element name="customer" nillable="true" type="xsd:string" />
+              <xsd:element name="description" nillable="true" type="xsd:string" />
+              <xsd:element name="estimatedHours" type="xsd:int" />
+              <xsd:element name="flexFields" nillable="true" type="tns1:SoapFieldValues" />
+              <xsd:element name="group" nillable="true" type="xsd:string" />
+              <xsd:element name="priority" type="xsd:int" />
+              <xsd:element name="reportedReleaseId" nillable="true" type="xsd:string" />
+              <xsd:element name="resolvedReleaseId" nillable="true" type="xsd:string" />
+              <xsd:element name="status" nillable="true" type="xsd:string" />
+              <xsd:element name="statusClass" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="FolderSoapDO" abstract="true">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns1:ObjectSoapDO">
+            <xsd:sequence>
+              <xsd:element name="description" nillable="true" type="xsd:string" />
+              <xsd:element name="parentFolderId" nillable="true" type="xsd:string" />
+              <xsd:element name="path" nillable="true" type="xsd:string" />
+              <xsd:element name="projectId" nillable="true" type="xsd:string" />
+              <xsd:element name="title" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="SoapNamedValues">
+        <xsd:sequence>
+          <xsd:element name="names" nillable="true" type="impl:ArrayOf_xsd_string" />
+          <xsd:element name="values" nillable="true" type="impl:ArrayOf_xsd_string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="TrackerSoapDO">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns1:FolderSoapDO">
+            <xsd:sequence>
+              <xsd:element name="assignments" nillable="true" type="tns1:SoapNamedValues" />
+              <xsd:element name="autoAssignField" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArtifactDependencySoapRow">
+        <xsd:sequence>
+          <xsd:element name="description" nillable="true" type="xsd:string" />
+          <xsd:element name="hasViewPermission" type="xsd:boolean" />
+          <xsd:element name="originId" nillable="true" type="xsd:string" />
+          <xsd:element name="originStatus" nillable="true" type="xsd:string" />
+          <xsd:element name="originStatusClass" nillable="true" type="xsd:string" />
+          <xsd:element name="originTitle" nillable="true" type="xsd:string" />
+          <xsd:element name="targetId" nillable="true" type="xsd:string" />
+          <xsd:element name="targetStatus" nillable="true" type="xsd:string" />
+          <xsd:element name="targetStatusClass" nillable="true" type="xsd:string" />
+          <xsd:element name="targetTitle" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArtifactDependencySoapList">
+        <xsd:sequence>
+          <xsd:element name="dataRows" nillable="true" type="impl:ArrayOf_tns1_ArtifactDependencySoapRow" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ObjectAlreadyExistsFault">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns1:WebServiceFault">
+            <xsd:sequence />
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="FolderSoapList" abstract="true">
+        <xsd:sequence />
+      </xsd:complexType>
+      <xsd:complexType name="FolderSoapRow">
+        <xsd:sequence>
+          <xsd:element name="createdBy" nillable="true" type="xsd:string" />
+          <xsd:element name="createdOn" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="description" nillable="true" type="xsd:string" />
+          <xsd:element name="id" nillable="true" type="xsd:string" />
+          <xsd:element name="lastModifiedBy" nillable="true" type="xsd:string" />
+          <xsd:element name="lastModifiedOn" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="parentFolderId" nillable="true" type="xsd:string" />
+          <xsd:element name="path" nillable="true" type="xsd:string" />
+          <xsd:element name="projectId" nillable="true" type="xsd:string" />
+          <xsd:element name="title" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="TrackerSoapRow">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns1:FolderSoapRow">
+            <xsd:sequence>
+              <xsd:element name="lastEditedByFullname" nillable="true" type="xsd:string" />
+              <xsd:element name="lastEditedByUsername" nillable="true" type="xsd:string" />
+              <xsd:element name="lastEditedDate" nillable="true" type="xsd:dateTime" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="TrackerSoapList">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns1:FolderSoapList">
+            <xsd:sequence>
+              <xsd:element name="dataRows" nillable="true" type="impl:ArrayOf_tns1_TrackerSoapRow" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="SoapFilter">
+        <xsd:sequence>
+          <xsd:element name="name" nillable="true" type="xsd:string" />
+          <xsd:element name="value" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArtifactSoapRow">
+        <xsd:sequence>
+          <xsd:element name="actualHours" type="xsd:int" />
+          <xsd:element name="artifactGroup" nillable="true" type="xsd:string" />
+          <xsd:element name="assignedToFullname" nillable="true" type="xsd:string" />
+          <xsd:element name="assignedToUsername" nillable="true" type="xsd:string" />
+          <xsd:element name="category" nillable="true" type="xsd:string" />
+          <xsd:element name="closeDate" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="customer" nillable="true" type="xsd:string" />
+          <xsd:element name="description" nillable="true" type="xsd:string" />
+          <xsd:element name="estimatedHours" type="xsd:int" />
+          <xsd:element name="folderId" nillable="true" type="xsd:string" />
+          <xsd:element name="folderPathString" nillable="true" type="xsd:string" />
+          <xsd:element name="folderTitle" nillable="true" type="xsd:string" />
+          <xsd:element name="id" nillable="true" type="xsd:string" />
+          <xsd:element name="lastModifiedDate" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="priority" type="xsd:int" />
+          <xsd:element name="projectId" nillable="true" type="xsd:string" />
+          <xsd:element name="projectPathString" nillable="true" type="xsd:string" />
+          <xsd:element name="projectTitle" nillable="true" type="xsd:string" />
+          <xsd:element name="status" nillable="true" type="xsd:string" />
+          <xsd:element name="statusClass" nillable="true" type="xsd:string" />
+          <xsd:element name="submittedByFullname" nillable="true" type="xsd:string" />
+          <xsd:element name="submittedByUsername" nillable="true" type="xsd:string" />
+          <xsd:element name="submittedDate" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="title" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArtifactSoapList">
+        <xsd:sequence>
+          <xsd:element name="dataRows" nillable="true" type="impl:ArrayOf_tns1_ArtifactSoapRow" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="InvalidFilterFault">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns1:WebServiceFault">
+            <xsd:sequence />
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="SoapSortKey">
+        <xsd:sequence>
+          <xsd:element name="ascending" type="xsd:boolean" />
+          <xsd:element name="name" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArtifactDetailSoapRow">
+        <xsd:sequence>
+          <xsd:element name="actualHours" type="xsd:int" />
+          <xsd:element name="artifactGroup" nillable="true" type="xsd:string" />
+          <xsd:element name="assignedToFullname" nillable="true" type="xsd:string" />
+          <xsd:element name="assignedToUsername" nillable="true" type="xsd:string" />
+          <xsd:element name="category" nillable="true" type="xsd:string" />
+          <xsd:element name="closeDate" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="customer" nillable="true" type="xsd:string" />
+          <xsd:element name="description" nillable="true" type="xsd:string" />
+          <xsd:element name="estimatedHours" type="xsd:int" />
+          <xsd:element name="flexFields" nillable="true" type="tns1:SoapFieldValues" />
+          <xsd:element name="folderId" nillable="true" type="xsd:string" />
+          <xsd:element name="folderPathString" nillable="true" type="xsd:string" />
+          <xsd:element name="folderTitle" nillable="true" type="xsd:string" />
+          <xsd:element name="id" nillable="true" type="xsd:string" />
+          <xsd:element name="lastModifiedDate" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="priority" type="xsd:int" />
+          <xsd:element name="projectId" nillable="true" type="xsd:string" />
+          <xsd:element name="projectPathString" nillable="true" type="xsd:string" />
+          <xsd:element name="projectTitle" nillable="true" type="xsd:string" />
+          <xsd:element name="reportedInReleaseTitle" nillable="true" type="xsd:string" />
+          <xsd:element name="resolvedInReleaseTitle" nillable="true" type="xsd:string" />
+          <xsd:element name="status" nillable="true" type="xsd:string" />
+          <xsd:element name="statusClass" nillable="true" type="xsd:string" />
+          <xsd:element name="submittedByFullname" nillable="true" type="xsd:string" />
+          <xsd:element name="submittedByUsername" nillable="true" type="xsd:string" />
+          <xsd:element name="submittedDate" nillable="true" type="xsd:dateTime" />
+          <xsd:element name="title" nillable="true" type="xsd:string" />
+          <xsd:element name="version" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArtifactDetailSoapList">
+        <xsd:sequence>
+          <xsd:element name="dataRows" nillable="true" type="impl:ArrayOf_tns1_ArtifactDetailSoapRow" />
+          <xsd:element name="fullListSize" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="SearchQuerySyntaxFault">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns1:WebServiceFault">
+            <xsd:sequence />
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="WorkflowTransitionSoapRow">
+        <xsd:sequence>
+          <xsd:element name="displayOrder" nillable="true" type="xsd:int" />
+          <xsd:element name="fromStatusName" nillable="true" type="xsd:string" />
+          <xsd:element name="requiredFields" nillable="true" type="impl:ArrayOf_xsd_string" />
+          <xsd:element name="toStatusName" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="WorkflowTransitionSoapList">
+        <xsd:sequence>
+          <xsd:element name="dataRows" nillable="true" type="impl:ArrayOf_tns1_WorkflowTransitionSoapRow" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="NoSuchRelationshipFault">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="tns1:WebServiceFault">
+            <xsd:sequence />
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://schema.open.collab.net/sfee50/soap50/service">
+      <xsd:import namespace="http://schema.open.collab.net/sfee50/soap50/type" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="ArrayOf_xsd_string">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="xsd:string[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns1_TrackerFieldValueSoapDO">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns1:TrackerFieldValueSoapDO[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns1_TrackerFieldSoapDO">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns1:TrackerFieldSoapDO[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_xsd_anyType">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="xsd:anyType[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns1_ArtifactDependencySoapRow">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns1:ArtifactDependencySoapRow[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns1_TrackerSoapRow">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns1:TrackerSoapRow[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns1_SoapFilter">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns1:SoapFilter[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns1_ArtifactSoapRow">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns1:ArtifactSoapRow[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns1_SoapSortKey">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns1:SoapSortKey[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns1_ArtifactDetailSoapRow">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns1:ArtifactDetailSoapRow[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_tns1_WorkflowTransitionSoapRow">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns1:WorkflowTransitionSoapRow[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="deleteArtifactResponse" />
+  <wsdl:message name="removeArtifactDependencyResponse" />
+  <wsdl:message name="copyWorkflowTransitionsResponse" />
+  <wsdl:message name="addUserSelectFieldResponse" />
+  <wsdl:message name="createArtifactResponse">
+    <wsdl:part name="createArtifactReturn" type="tns1:ArtifactSoapDO" />
+  </wsdl:message>
+  <wsdl:message name="SystemFault">
+    <wsdl:part name="fault" type="tns1:SystemFault" />
+  </wsdl:message>
+  <wsdl:message name="InvalidSessionFault">
+    <wsdl:part name="fault" type="tns1:InvalidSessionFault" />
+  </wsdl:message>
+  <wsdl:message name="copyWorkflowTransitionsRequest">
+    <wsdl:part name="sessionId" type="soapenc:string" />
+    <wsdl:part name="srcTrackerId" type="soapenc:string" />
+    <wsdl:part name="dstTrackerId" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="moveArtifactResponse">
+    <wsdl:part name="moveArtifactReturn" type="tns1:ArtifactSoapDO" />
+  </wsdl:message>
+  <wsdl:message name="getChildDependencyListRequest">
+    <wsdl:part name="sessionId" type="soapenc:string" />
+    <wsdl:part name="artifactId" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="IllegalArgumentFault">
+    <wsdl:part name="fault" type="tns1:IllegalArgumentFault" />
+  </wsdl:message>
+  <wsdl:message name="addMultiSelectFieldRequest">
+    <wsdl:part name="sessionId" type="soapenc:string" />
+    <wsdl:part name="trackerId" type="soapenc:string" />
+    <wsdl:part name="fieldName" type="soapenc:string" />
+    <wsdl:part name="displayLines" type="xsd:int" />
+    <wsdl:part name="isRequired" type="xsd:boolean" />
+    <wsdl:part name="isDisabled" type="xsd:boolean" />
+    <wsdl:part name="isHiddenOnCreate" type="xsd:boolean" />
+    <wsdl:part name="fieldValues" type="impl:ArrayOf_xsd_string" />
+    <wsdl:part name="defaultValues" type="impl:ArrayOf_xsd_string" />
+  </wsdl:message>
+  <wsdl:message name="getTrackerListRequest">
+    <wsdl:part name="sessionId" type="soapenc:string" />
+    <wsdl:part name="projectId" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="deleteFieldRequest">
+    <wsdl:part name="sessionId" type="soapenc:string" />
+    <wsdl:part name="objectId" type="soapenc:string" />
+    <wsdl:part name="fieldId" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="findArtifactsResponse">
+    <wsdl:part name="findArtifactsReturn" type="tns1:ArtifactSoapList" />
+  </wsdl:message>
+  <wsdl:message name="addDateFieldRequest">
+    <wsdl:part name="sessionId" type="soapenc:string" />
+    <wsdl:part name="trackerId" type="soapenc:string" />
+    <wsdl:part name="fieldName" type="soapenc:string" />
+    <wsdl:part name="isRequired" type="xsd:boolean" />
+    <wsdl:part name="isDisabled" type="xsd:boolean" />
+    <wsdl:part name="isHiddenOnCreate" type="xsd:boolean" />
+  </wsdl:message>
+  <wsdl:message name="NoSuchObjectFault">
+    <wsdl:part name="fault" type="tns1:NoSuchObjectFault" />
+  </wsdl:message>
+  <wsdl:message name="InvalidOperationFault">
+    <wsdl:part name="fault" type="tns1:InvalidOperationFault" />
+  </wsdl:message>
+  <wsdl:message name="createArtifactRequest">
+    <wsdl:part name="sessionId" type="soapenc:string" />
+    <wsdl:part name="trackerId" type="soapenc:string" />
+    <wsdl:part name="title" type="soapenc:string" />
+    <wsdl:part name="description" type="soapenc:string" />
+    <wsdl:part name="group" type="soapenc:string" />
+    <wsdl:part name="category" type="soapenc:string" />
+    <wsdl:part name="status" type="soapenc:string" />
+    <wsdl:part name="customer" type="soapenc:string" />
+    <wsdl:part name="priority" type="xsd:int" />
+    <wsdl:part name="estimatedHours" type="xsd:int" />
+    <wsdl:part name="assignedUsername" type="soapenc:string" />
+    <wsdl:part name="releaseId" type="soapenc:string" />
+    <wsdl:part name="flexFields" type="tns1:SoapFieldValues" />
+    <wsdl:part name="attachmentFileName" type="soapenc:string" />
+    <wsdl:part name="attachmentMimeType" type="soapenc:string" />
+    <wsdl:part name="attachmentFileId" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="deleteArtifactRequest">
+    <wsdl:part name="sessionId" type="soapenc:string" />
+    <wsdl:part name="artifactId" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="setArtifactDataRequest">
+    <wsdl:part name="sessionId" type="soapenc:string" />
+    <wsdl:part name="artifactData" type="tns1:ArtifactSoapDO" />
+    <wsdl:part name="comment" type="soapenc:string" />
+    <wsdl:part name="attachmentFileName" type="soapenc:string" />
+    <wsdl:part name="attachmentMimeType" type="soapenc:string" />
+    <wsdl:part name="attachmentFileId" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="getAllowedWorkflowTransitionListResponse">
+    <wsdl:part name="getAllowedWorkflowTransitionListReturn" type="tns1:WorkflowTransitionSoapList" />
+  </wsdl:message>
+  <wsdl:message name="addDateFieldResponse" />
+  <wsdl:message name="moveArtifactRequest">
+    <wsdl:part name="sessionId" type="soapenc:string" />
+    <wsdl:part name="artifactId" type="soapenc:string" />
+    <wsdl:part name="targetFolderId" type="soapenc:string" />
+    <wsdl:part name="newAssignee" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="getArtifactListRequest">
+    <wsdl:part name="sessionId" type="soapenc:string" />
+    <wsdl:part name="containerId" type="soapenc:string" />
+    <wsdl:part name="filters" type="impl:ArrayOf_tns1_SoapFilter" />
+  </wsdl:message>
+  <wsdl:message name="setFieldResponse" />
+  <wsdl:message name="ObjectAlreadyExistsFault">
+    <wsdl:part name="fault" type="tns1:ObjectAlreadyExistsFault" />
+  </wsdl:message>
+  <wsdl:message name="getFieldsRequest">
+    <wsdl:part name="sessionId" type="soapenc:string" />
+    <wsdl:part name="trackerId" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="addTextFieldResponse" />
+  <wsdl:message name="PermissionDeniedFault">
+    <wsdl:part name="fault" type="tns1:PermissionDeniedFault" />
+  </wsdl:message>
+  <wsdl:message name="addSingleSelectFieldResponse" />
+  <wsdl:message name="getAllowedWorkflowTransitionListRequest">
+    <wsdl:part name="sessionId" type="soapenc:string" />
+    <wsdl:part name="trackerId" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="getArtifactDataResponse">
+    <wsdl:part name="getArtifactDataReturn" type="tns1:ArtifactSoapDO" />
+  </wsdl:message>
+  <wsdl:message name="setFieldRequest">
+    <wsdl:part name="sessionId" type="soapenc:string" />
+    <wsdl:part name="objectId" type="soapenc:string" />
+    <wsdl:part name="fieldData" type="tns1:TrackerFieldSoapDO" />
+  </wsdl:message>
+  <wsdl:message name="getParentDependencyListRequest">
+    <wsdl:part name="sessionId" type="soapenc:string" />
+    <wsdl:part name="artifactId" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="addTextFieldRequest">
+    <wsdl:part name="sessionId" type="soapenc:string" />
+    <wsdl:part name="trackerId" type="soapenc:string" />
+    <wsdl:part name="fieldName" type="soapenc:string" />
+    <wsdl:part name="displayColumns" type="xsd:int" />
+    <wsdl:part name="displayLines" type="xsd:int" />
+    <wsdl:part name="isRequired" type="xsd:boolean" />
+    <wsdl:part name="isDisabled" type="xsd:boolean" />
+    <wsdl:part name="isHiddenOnCreate" type="xsd:boolean" />
+    <wsdl:part name="defaultValue" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="createArtifactDependencyResponse" />
+  <wsdl:message name="getTrackerDataRequest">
+    <wsdl:part name="sessionId" type="soapenc:string" />
+    <wsdl:part name="trackerId" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="addSingleSelectFieldRequest">
+    <wsdl:part name="sessionId" type="soapenc:string" />
+    <wsdl:part name="trackerId" type="soapenc:string" />
+    <wsdl:part name="fieldName" type="soapenc:string" />
+    <wsdl:part name="isRequired" type="xsd:boolean" />
+    <wsdl:part name="isDisabled" type="xsd:boolean" />
+    <wsdl:part name="isHiddenOnCreate" type="xsd:boolean" />
+    <wsdl:part name="fieldValues" type="impl:ArrayOf_xsd_string" />
+    <wsdl:part name="defaultValue" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="InvalidFilterFault">
+    <wsdl:part name="fault" type="tns1:InvalidFilterFault" />
+  </wsdl:message>
+  <wsdl:message name="getFieldsResponse">
+    <wsdl:part name="getFieldsReturn" type="impl:ArrayOf_tns1_TrackerFieldSoapDO" />
+  </wsdl:message>
+  <wsdl:message name="addUserSelectFieldRequest">
+    <wsdl:part name="sessionId" type="soapenc:string" />
+    <wsdl:part name="trackerId" type="soapenc:string" />
+    <wsdl:part name="fieldName" type="soapenc:string" />
+    <wsdl:part name="displayLines" type="xsd:int" />
+    <wsdl:part name="isRequired" type="xsd:boolean" />
+    <wsdl:part name="isDisabled" type="xsd:boolean" />
+    <wsdl:part name="isHiddenOnCreate" type="xsd:boolean" />
+    <wsdl:part name="defaultValues" type="impl:ArrayOf_xsd_string" />
+    <wsdl:part name="userFilter" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="getArtifactDataRequest">
+    <wsdl:part name="sessionId" type="soapenc:string" />
+    <wsdl:part name="artifactId" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="removeArtifactDependencyRequest">
+    <wsdl:part name="sessionId" type="soapenc:string" />
+    <wsdl:part name="originId" type="soapenc:string" />
+    <wsdl:part name="targetId" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="createTrackerRequest">
+    <wsdl:part name="sessionId" type="soapenc:string" />
+    <wsdl:part name="projectId" type="soapenc:string" />
+    <wsdl:part name="trackerName" type="soapenc:string" />
+    <wsdl:part name="trackerTitle" type="soapenc:string" />
+    <wsdl:part name="trackerDescription" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="setArtifactDataResponse" />
+  <wsdl:message name="findArtifactsRequest">
+    <wsdl:part name="sessionId" type="soapenc:string" />
+    <wsdl:part name="queryString" type="soapenc:string" />
+    <wsdl:part name="projectId" type="soapenc:string" />
+    <wsdl:part name="searchAttachments" type="xsd:boolean" />
+  </wsdl:message>
+  <wsdl:message name="deleteFieldResponse" />
+  <wsdl:message name="WorkflowViolationFault">
+    <wsdl:part name="fault" type="tns1:WorkflowViolationFault" />
+  </wsdl:message>
+  <wsdl:message name="getArtifactDetailListRequest">
+    <wsdl:part name="sessionId" type="soapenc:string" />
+    <wsdl:part name="trackerId" type="soapenc:string" />
+    <wsdl:part name="selectedColumns" type="impl:ArrayOf_xsd_string" />
+    <wsdl:part name="filters" type="impl:ArrayOf_tns1_SoapFilter" />
+    <wsdl:part name="sortKeys" type="impl:ArrayOf_tns1_SoapSortKey" />
+    <wsdl:part name="startIndex" type="xsd:int" />
+    <wsdl:part name="maxRows" type="xsd:int" />
+    <wsdl:part name="exceptionIfExpiredCache" type="xsd:boolean" />
+    <wsdl:part name="forceNewQuery" type="xsd:boolean" />
+  </wsdl:message>
+  <wsdl:message name="getParentDependencyListResponse">
+    <wsdl:part name="getParentDependencyListReturn" type="tns1:ArtifactDependencySoapList" />
+  </wsdl:message>
+  <wsdl:message name="getArtifactListResponse">
+    <wsdl:part name="getArtifactListReturn" type="tns1:ArtifactSoapList" />
+  </wsdl:message>
+  <wsdl:message name="createArtifactDependencyRequest">
+    <wsdl:part name="sessionId" type="soapenc:string" />
+    <wsdl:part name="originId" type="soapenc:string" />
+    <wsdl:part name="targetId" type="soapenc:string" />
+    <wsdl:part name="desc" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="setTrackerDataResponse" />
+  <wsdl:message name="addMultiSelectFieldResponse" />
+  <wsdl:message name="getTrackerDataResponse">
+    <wsdl:part name="getTrackerDataReturn" type="tns1:TrackerSoapDO" />
+  </wsdl:message>
+  <wsdl:message name="NoSuchRelationshipFault">
+    <wsdl:part name="fault" type="tns1:NoSuchRelationshipFault" />
+  </wsdl:message>
+  <wsdl:message name="getChildDependencyListResponse">
+    <wsdl:part name="getChildDependencyListReturn" type="tns1:ArtifactDependencySoapList" />
+  </wsdl:message>
+  <wsdl:message name="createTrackerResponse">
+    <wsdl:part name="createTrackerReturn" type="tns1:TrackerSoapDO" />
+  </wsdl:message>
+  <wsdl:message name="getTrackerListResponse">
+    <wsdl:part name="getTrackerListReturn" type="tns1:TrackerSoapList" />
+  </wsdl:message>
+  <wsdl:message name="SearchQuerySyntaxFault">
+    <wsdl:part name="fault" type="tns1:SearchQuerySyntaxFault" />
+  </wsdl:message>
+  <wsdl:message name="setTrackerDataRequest">
+    <wsdl:part name="sessionId" type="soapenc:string" />
+    <wsdl:part name="trackerData" type="tns1:TrackerSoapDO" />
+  </wsdl:message>
+  <wsdl:message name="getArtifactDetailListResponse">
+    <wsdl:part name="getArtifactDetailListReturn" type="tns1:ArtifactDetailSoapList" />
+  </wsdl:message>
+  <wsdl:message name="VersionMismatchFault">
+    <wsdl:part name="fault" type="tns1:VersionMismatchFault" />
+  </wsdl:message>
+  <wsdl:message name="DependencyViolationFault">
+    <wsdl:part name="fault" type="tns1:DependencyViolationFault" />
+  </wsdl:message>
+  <wsdl:portType name="TrackerAppSoap">
+    <wsdl:operation name="getFields" parameterOrder="sessionId trackerId">
+      <wsdl:input name="getFieldsRequest" message="impl:getFieldsRequest" />
+      <wsdl:output name="getFieldsResponse" message="impl:getFieldsResponse" />
+      <wsdl:fault name="NoSuchObjectFault" message="impl:NoSuchObjectFault" />
+      <wsdl:fault name="InvalidSessionFault" message="impl:InvalidSessionFault" />
+      <wsdl:fault name="PermissionDeniedFault" message="impl:PermissionDeniedFault" />
+      <wsdl:fault name="SystemFault" message="impl:SystemFault" />
+    </wsdl:operation>
+    <wsdl:operation name="setField" parameterOrder="sessionId objectId fieldData">
+      <wsdl:input name="setFieldRequest" message="impl:setFieldRequest" />
+      <wsdl:output name="setFieldResponse" message="impl:setFieldResponse" />
+      <wsdl:fault name="InvalidOperationFault" message="impl:InvalidOperationFault" />
+      <wsdl:fault name="InvalidSessionFault" message="impl:InvalidSessionFault" />
+      <wsdl:fault name="NoSuchObjectFault" message="impl:NoSuchObjectFault" />
+      <wsdl:fault name="PermissionDeniedFault" message="impl:PermissionDeniedFault" />
+      <wsdl:fault name="SystemFault" message="impl:SystemFault" />
+      <wsdl:fault name="IllegalArgumentFault" message="impl:IllegalArgumentFault" />
+      <wsdl:fault name="VersionMismatchFault" message="impl:VersionMismatchFault" />
+      <wsdl:fault name="DependencyViolationFault" message="impl:DependencyViolationFault" />
+    </wsdl:operation>
+    <wsdl:operation name="copyWorkflowTransitions" parameterOrder="sessionId srcTrackerId dstTrackerId">
+      <wsdl:input name="copyWorkflowTransitionsRequest" message="impl:copyWorkflowTransitionsRequest" />
+      <wsdl:output name="copyWorkflowTransitionsResponse" message="impl:copyWorkflowTransitionsResponse" />
+      <wsdl:fault name="NoSuchObjectFault" message="impl:NoSuchObjectFault" />
+      <wsdl:fault name="InvalidSessionFault" message="impl:InvalidSessionFault" />
+      <wsdl:fault name="PermissionDeniedFault" message="impl:PermissionDeniedFault" />
+      <wsdl:fault name="SystemFault" message="impl:SystemFault" />
+      <wsdl:fault name="WorkflowViolationFault" message="impl:WorkflowViolationFault" />
+    </wsdl:operation>
+    <wsdl:operation name="createArtifact" parameterOrder="sessionId trackerId title description group category status customer priority estimatedHours assignedUsername releaseId flexFields attachmentFileName attachmentMimeType attachmentFileId">
+      <wsdl:input name="createArtifactRequest" message="impl:createArtifactRequest" />
+      <wsdl:output name="createArtifactResponse" message="impl:createArtifactResponse" />
+      <wsdl:fault name="NoSuchObjectFault" message="impl:NoSuchObjectFault" />
+      <wsdl:fault name="InvalidSessionFault" message="impl:InvalidSessionFault" />
+      <wsdl:fault name="PermissionDeniedFault" message="impl:PermissionDeniedFault" />
+      <wsdl:fault name="IllegalArgumentFault" message="impl:IllegalArgumentFault" />
+      <wsdl:fault name="SystemFault" message="impl:SystemFault" />
+    </wsdl:operation>
+    <wsdl:operation name="getArtifactData" parameterOrder="sessionId artifactId">
+      <wsdl:input name="getArtifactDataRequest" message="impl:getArtifactDataRequest" />
+      <wsdl:output name="getArtifactDataResponse" message="impl:getArtifactDataResponse" />
+      <wsdl:fault name="NoSuchObjectFault" message="impl:NoSuchObjectFault" />
+      <wsdl:fault name="InvalidSessionFault" message="impl:InvalidSessionFault" />
+      <wsdl:fault name="PermissionDeniedFault" message="impl:PermissionDeniedFault" />
+      <wsdl:fault name="SystemFault" message="impl:SystemFault" />
+    </wsdl:operation>
+    <wsdl:operation name="setArtifactData" parameterOrder="sessionId artifactData comment attachmentFileName attachmentMimeType attachmentFileId">
+      <wsdl:input name="setArtifactDataRequest" message="impl:setArtifactDataRequest" />
+      <wsdl:output name="setArtifactDataResponse" message="impl:setArtifactDataResponse" />
+      <wsdl:fault name="NoSuchObjectFault" message="impl:NoSuchObjectFault" />
+      <wsdl:fault name="InvalidSessionFault" message="impl:InvalidSessionFault" />
+      <wsdl:fault name="PermissionDeniedFault" message="impl:PermissionDeniedFault" />
+      <wsdl:fault name="SystemFault" message="impl:SystemFault" />
+      <wsdl:fault name="IllegalArgumentFault" message="impl:IllegalArgumentFault" />
+      <wsdl:fault name="VersionMismatchFault" message="impl:VersionMismatchFault" />
+      <wsdl:fault name="WorkflowViolationFault" message="impl:WorkflowViolationFault" />
+      <wsdl:fault name="DependencyViolationFault" message="impl:DependencyViolationFault" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteField" parameterOrder="sessionId objectId fieldId">
+      <wsdl:input name="deleteFieldRequest" message="impl:deleteFieldRequest" />
+      <wsdl:output name="deleteFieldResponse" message="impl:deleteFieldResponse" />
+      <wsdl:fault name="InvalidOperationFault" message="impl:InvalidOperationFault" />
+      <wsdl:fault name="InvalidSessionFault" message="impl:InvalidSessionFault" />
+      <wsdl:fault name="NoSuchObjectFault" message="impl:NoSuchObjectFault" />
+      <wsdl:fault name="PermissionDeniedFault" message="impl:PermissionDeniedFault" />
+      <wsdl:fault name="SystemFault" message="impl:SystemFault" />
+    </wsdl:operation>
+    <wsdl:operation name="getTrackerData" parameterOrder="sessionId trackerId">
+      <wsdl:input name="getTrackerDataRequest" message="impl:getTrackerDataRequest" />
+      <wsdl:output name="getTrackerDataResponse" message="impl:getTrackerDataResponse" />
+      <wsdl:fault name="NoSuchObjectFault" message="impl:NoSuchObjectFault" />
+      <wsdl:fault name="InvalidSessionFault" message="impl:InvalidSessionFault" />
+      <wsdl:fault name="PermissionDeniedFault" message="impl:PermissionDeniedFault" />
+      <wsdl:fault name="SystemFault" message="impl:SystemFault" />
+    </wsdl:operation>
+    <wsdl:operation name="setTrackerData" parameterOrder="sessionId trackerData">
+      <wsdl:input name="setTrackerDataRequest" message="impl:setTrackerDataRequest" />
+      <wsdl:output name="setTrackerDataResponse" message="impl:setTrackerDataResponse" />
+      <wsdl:fault name="NoSuchObjectFault" message="impl:NoSuchObjectFault" />
+      <wsdl:fault name="InvalidSessionFault" message="impl:InvalidSessionFault" />
+      <wsdl:fault name="PermissionDeniedFault" message="impl:PermissionDeniedFault" />
+      <wsdl:fault name="IllegalArgumentFault" message="impl:IllegalArgumentFault" />
+      <wsdl:fault name="SystemFault" message="impl:SystemFault" />
+      <wsdl:fault name="VersionMismatchFault" message="impl:VersionMismatchFault" />
+    </wsdl:operation>
+    <wsdl:operation name="addDateField" parameterOrder="sessionId trackerId fieldName isRequired isDisabled isHiddenOnCreate">
+      <wsdl:input name="addDateFieldRequest" message="impl:addDateFieldRequest" />
+      <wsdl:output name="addDateFieldResponse" message="impl:addDateFieldResponse" />
+      <wsdl:fault name="InvalidOperationFault" message="impl:InvalidOperationFault" />
+      <wsdl:fault name="InvalidSessionFault" message="impl:InvalidSessionFault" />
+      <wsdl:fault name="NoSuchObjectFault" message="impl:NoSuchObjectFault" />
+      <wsdl:fault name="PermissionDeniedFault" message="impl:PermissionDeniedFault" />
+      <wsdl:fault name="SystemFault" message="impl:SystemFault" />
+      <wsdl:fault name="IllegalArgumentFault" message="impl:IllegalArgumentFault" />
+      <wsdl:fault name="VersionMismatchFault" message="impl:VersionMismatchFault" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteArtifact" parameterOrder="sessionId artifactId">
+      <wsdl:input name="deleteArtifactRequest" message="impl:deleteArtifactRequest" />
+      <wsdl:output name="deleteArtifactResponse" message="impl:deleteArtifactResponse" />
+      <wsdl:fault name="NoSuchObjectFault" message="impl:NoSuchObjectFault" />
+      <wsdl:fault name="InvalidSessionFault" message="impl:InvalidSessionFault" />
+      <wsdl:fault name="PermissionDeniedFault" message="impl:PermissionDeniedFault" />
+      <wsdl:fault name="SystemFault" message="impl:SystemFault" />
+    </wsdl:operation>
+    <wsdl:operation name="moveArtifact" parameterOrder="sessionId artifactId targetFolderId newAssignee">
+      <wsdl:input name="moveArtifactRequest" message="impl:moveArtifactRequest" />
+      <wsdl:output name="moveArtifactResponse" message="impl:moveArtifactResponse" />
+      <wsdl:fault name="NoSuchObjectFault" message="impl:NoSuchObjectFault" />
+      <wsdl:fault name="InvalidSessionFault" message="impl:InvalidSessionFault" />
+      <wsdl:fault name="PermissionDeniedFault" message="impl:PermissionDeniedFault" />
+      <wsdl:fault name="IllegalArgumentFault" message="impl:IllegalArgumentFault" />
+      <wsdl:fault name="SystemFault" message="impl:SystemFault" />
+    </wsdl:operation>
+    <wsdl:operation name="getParentDependencyList" parameterOrder="sessionId artifactId">
+      <wsdl:input name="getParentDependencyListRequest" message="impl:getParentDependencyListRequest" />
+      <wsdl:output name="getParentDependencyListResponse" message="impl:getParentDependencyListResponse" />
+      <wsdl:fault name="NoSuchObjectFault" message="impl:NoSuchObjectFault" />
+      <wsdl:fault name="InvalidSessionFault" message="impl:InvalidSessionFault" />
+      <wsdl:fault name="PermissionDeniedFault" message="impl:PermissionDeniedFault" />
+      <wsdl:fault name="SystemFault" message="impl:SystemFault" />
+      <wsdl:fault name="WorkflowViolationFault" message="impl:WorkflowViolationFault" />
+    </wsdl:operation>
+    <wsdl:operation name="getChildDependencyList" parameterOrder="sessionId artifactId">
+      <wsdl:input name="getChildDependencyListRequest" message="impl:getChildDependencyListRequest" />
+      <wsdl:output name="getChildDependencyListResponse" message="impl:getChildDependencyListResponse" />
+      <wsdl:fault name="NoSuchObjectFault" message="impl:NoSuchObjectFault" />
+      <wsdl:fault name="InvalidSessionFault" message="impl:InvalidSessionFault" />
+      <wsdl:fault name="PermissionDeniedFault" message="impl:PermissionDeniedFault" />
+      <wsdl:fault name="SystemFault" message="impl:SystemFault" />
+      <wsdl:fault name="WorkflowViolationFault" message="impl:WorkflowViolationFault" />
+    </wsdl:operation>
+    <wsdl:operation name="createTracker" parameterOrder="sessionId projectId trackerName trackerTitle trackerDescription">
+      <wsdl:input name="createTrackerRequest" message="impl:createTrackerRequest" />
+      <wsdl:output name="createTrackerResponse" message="impl:createTrackerResponse" />
+      <wsdl:fault name="ObjectAlreadyExistsFault" message="impl:ObjectAlreadyExistsFault" />
+      <wsdl:fault name="NoSuchObjectFault" message="impl:NoSuchObjectFault" />
+      <wsdl:fault name="InvalidSessionFault" message="impl:InvalidSessionFault" />
+      <wsdl:fault name="PermissionDeniedFault" message="impl:PermissionDeniedFault" />
+      <wsdl:fault name="SystemFault" message="impl:SystemFault" />
+    </wsdl:operation>
+    <wsdl:operation name="getTrackerList" parameterOrder="sessionId projectId">
+      <wsdl:input name="getTrackerListRequest" message="impl:getTrackerListRequest" />
+      <wsdl:output name="getTrackerListResponse" message="impl:getTrackerListResponse" />
+      <wsdl:fault name="NoSuchObjectFault" message="impl:NoSuchObjectFault" />
+      <wsdl:fault name="InvalidSessionFault" message="impl:InvalidSessionFault" />
+      <wsdl:fault name="PermissionDeniedFault" message="impl:PermissionDeniedFault" />
+      <wsdl:fault name="SystemFault" message="impl:SystemFault" />
+    </wsdl:operation>
+    <wsdl:operation name="addTextField" parameterOrder="sessionId trackerId fieldName displayColumns displayLines isRequired isDisabled isHiddenOnCreate defaultValue">
+      <wsdl:input name="addTextFieldRequest" message="impl:addTextFieldRequest" />
+      <wsdl:output name="addTextFieldResponse" message="impl:addTextFieldResponse" />
+      <wsdl:fault name="InvalidOperationFault" message="impl:InvalidOperationFault" />
+      <wsdl:fault name="InvalidSessionFault" message="impl:InvalidSessionFault" />
+      <wsdl:fault name="NoSuchObjectFault" message="impl:NoSuchObjectFault" />
+      <wsdl:fault name="PermissionDeniedFault" message="impl:PermissionDeniedFault" />
+      <wsdl:fault name="SystemFault" message="impl:SystemFault" />
+      <wsdl:fault name="IllegalArgumentFault" message="impl:IllegalArgumentFault" />
+      <wsdl:fault name="VersionMismatchFault" message="impl:VersionMismatchFault" />
+    </wsdl:operation>
+    <wsdl:operation name="addSingleSelectField" parameterOrder="sessionId trackerId fieldName isRequired isDisabled isHiddenOnCreate fieldValues defaultValue">
+      <wsdl:input name="addSingleSelectFieldRequest" message="impl:addSingleSelectFieldRequest" />
+      <wsdl:output name="addSingleSelectFieldResponse" message="impl:addSingleSelectFieldResponse" />
+      <wsdl:fault name="InvalidOperationFault" message="impl:InvalidOperationFault" />
+      <wsdl:fault name="InvalidSessionFault" message="impl:InvalidSessionFault" />
+      <wsdl:fault name="NoSuchObjectFault" message="impl:NoSuchObjectFault" />
+      <wsdl:fault name="PermissionDeniedFault" message="impl:PermissionDeniedFault" />
+      <wsdl:fault name="SystemFault" message="impl:SystemFault" />
+      <wsdl:fault name="IllegalArgumentFault" message="impl:IllegalArgumentFault" />
+      <wsdl:fault name="VersionMismatchFault" message="impl:VersionMismatchFault" />
+    </wsdl:operation>
+    <wsdl:operation name="addMultiSelectField" parameterOrder="sessionId trackerId fieldName displayLines isRequired isDisabled isHiddenOnCreate fieldValues defaultValues">
+      <wsdl:input name="addMultiSelectFieldRequest" message="impl:addMultiSelectFieldRequest" />
+      <wsdl:output name="addMultiSelectFieldResponse" message="impl:addMultiSelectFieldResponse" />
+      <wsdl:fault name="InvalidOperationFault" message="impl:InvalidOperationFault" />
+      <wsdl:fault name="InvalidSessionFault" message="impl:InvalidSessionFault" />
+      <wsdl:fault name="NoSuchObjectFault" message="impl:NoSuchObjectFault" />
+      <wsdl:fault name="PermissionDeniedFault" message="impl:PermissionDeniedFault" />
+      <wsdl:fault name="SystemFault" message="impl:SystemFault" />
+      <wsdl:fault name="IllegalArgumentFault" message="impl:IllegalArgumentFault" />
+      <wsdl:fault name="VersionMismatchFault" message="impl:VersionMismatchFault" />
+    </wsdl:operation>
+    <wsdl:operation name="addUserSelectField" parameterOrder="sessionId trackerId fieldName displayLines isRequired isDisabled isHiddenOnCreate defaultValues userFilter">
+      <wsdl:input name="addUserSelectFieldRequest" message="impl:addUserSelectFieldRequest" />
+      <wsdl:output name="addUserSelectFieldResponse" message="impl:addUserSelectFieldResponse" />
+      <wsdl:fault name="InvalidOperationFault" message="impl:InvalidOperationFault" />
+      <wsdl:fault name="InvalidSessionFault" message="impl:InvalidSessionFault" />
+      <wsdl:fault name="NoSuchObjectFault" message="impl:NoSuchObjectFault" />
+      <wsdl:fault name="PermissionDeniedFault" message="impl:PermissionDeniedFault" />
+      <wsdl:fault name="SystemFault" message="impl:SystemFault" />
+      <wsdl:fault name="IllegalArgumentFault" message="impl:IllegalArgumentFault" />
+      <wsdl:fault name="VersionMismatchFault" message="impl:VersionMismatchFault" />
+    </wsdl:operation>
+    <wsdl:operation name="getArtifactList" parameterOrder="sessionId containerId filters">
+      <wsdl:input name="getArtifactListRequest" message="impl:getArtifactListRequest" />
+      <wsdl:output name="getArtifactListResponse" message="impl:getArtifactListResponse" />
+      <wsdl:fault name="NoSuchObjectFault" message="impl:NoSuchObjectFault" />
+      <wsdl:fault name="InvalidSessionFault" message="impl:InvalidSessionFault" />
+      <wsdl:fault name="PermissionDeniedFault" message="impl:PermissionDeniedFault" />
+      <wsdl:fault name="SystemFault" message="impl:SystemFault" />
+      <wsdl:fault name="InvalidFilterFault" message="impl:InvalidFilterFault" />
+    </wsdl:operation>
+    <wsdl:operation name="getArtifactDetailList" parameterOrder="sessionId trackerId selectedColumns filters sortKeys startIndex maxRows exceptionIfExpiredCache forceNewQuery">
+      <wsdl:input name="getArtifactDetailListRequest" message="impl:getArtifactDetailListRequest" />
+      <wsdl:output name="getArtifactDetailListResponse" message="impl:getArtifactDetailListResponse" />
+      <wsdl:fault name="NoSuchObjectFault" message="impl:NoSuchObjectFault" />
+      <wsdl:fault name="InvalidSessionFault" message="impl:InvalidSessionFault" />
+      <wsdl:fault name="PermissionDeniedFault" message="impl:PermissionDeniedFault" />
+      <wsdl:fault name="SystemFault" message="impl:SystemFault" />
+      <wsdl:fault name="InvalidFilterFault" message="impl:InvalidFilterFault" />
+    </wsdl:operation>
+    <wsdl:operation name="findArtifacts" parameterOrder="sessionId queryString projectId searchAttachments">
+      <wsdl:input name="findArtifactsRequest" message="impl:findArtifactsRequest" />
+      <wsdl:output name="findArtifactsResponse" message="impl:findArtifactsResponse" />
+      <wsdl:fault name="NoSuchObjectFault" message="impl:NoSuchObjectFault" />
+      <wsdl:fault name="InvalidSessionFault" message="impl:InvalidSessionFault" />
+      <wsdl:fault name="IllegalArgumentFault" message="impl:IllegalArgumentFault" />
+      <wsdl:fault name="SystemFault" message="impl:SystemFault" />
+      <wsdl:fault name="SearchQuerySyntaxFault" message="impl:SearchQuerySyntaxFault" />
+    </wsdl:operation>
+    <wsdl:operation name="getAllowedWorkflowTransitionList" parameterOrder="sessionId trackerId">
+      <wsdl:input name="getAllowedWorkflowTransitionListRequest" message="impl:getAllowedWorkflowTransitionListRequest" />
+      <wsdl:output name="getAllowedWorkflowTransitionListResponse" message="impl:getAllowedWorkflowTransitionListResponse" />
+      <wsdl:fault name="NoSuchObjectFault" message="impl:NoSuchObjectFault" />
+      <wsdl:fault name="InvalidSessionFault" message="impl:InvalidSessionFault" />
+      <wsdl:fault name="SystemFault" message="impl:SystemFault" />
+    </wsdl:operation>
+    <wsdl:operation name="createArtifactDependency" parameterOrder="sessionId originId targetId desc">
+      <wsdl:input name="createArtifactDependencyRequest" message="impl:createArtifactDependencyRequest" />
+      <wsdl:output name="createArtifactDependencyResponse" message="impl:createArtifactDependencyResponse" />
+      <wsdl:fault name="NoSuchObjectFault" message="impl:NoSuchObjectFault" />
+      <wsdl:fault name="InvalidSessionFault" message="impl:InvalidSessionFault" />
+      <wsdl:fault name="PermissionDeniedFault" message="impl:PermissionDeniedFault" />
+      <wsdl:fault name="SystemFault" message="impl:SystemFault" />
+      <wsdl:fault name="WorkflowViolationFault" message="impl:WorkflowViolationFault" />
+      <wsdl:fault name="DependencyViolationFault" message="impl:DependencyViolationFault" />
+    </wsdl:operation>
+    <wsdl:operation name="removeArtifactDependency" parameterOrder="sessionId originId targetId">
+      <wsdl:input name="removeArtifactDependencyRequest" message="impl:removeArtifactDependencyRequest" />
+      <wsdl:output name="removeArtifactDependencyResponse" message="impl:removeArtifactDependencyResponse" />
+      <wsdl:fault name="NoSuchRelationshipFault" message="impl:NoSuchRelationshipFault" />
+      <wsdl:fault name="NoSuchObjectFault" message="impl:NoSuchObjectFault" />
+      <wsdl:fault name="InvalidSessionFault" message="impl:InvalidSessionFault" />
+      <wsdl:fault name="PermissionDeniedFault" message="impl:PermissionDeniedFault" />
+      <wsdl:fault name="SystemFault" message="impl:SystemFault" />
+      <wsdl:fault name="WorkflowViolationFault" message="impl:WorkflowViolationFault" />
+      <wsdl:fault name="DependencyViolationFault" message="impl:DependencyViolationFault" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TrackerAppSoapBinding" type="impl:TrackerAppSoap">
+    <wsdlsoap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="getFields">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getFieldsRequest">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getFieldsResponse">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="NoSuchObjectFault">
+        <wsdlsoap:fault use="encoded" name="NoSuchObjectFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidSessionFault">
+        <wsdlsoap:fault use="encoded" name="InvalidSessionFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="PermissionDeniedFault">
+        <wsdlsoap:fault use="encoded" name="PermissionDeniedFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="SystemFault">
+        <wsdlsoap:fault use="encoded" name="SystemFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setField">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="setFieldRequest">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="setFieldResponse">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="InvalidOperationFault">
+        <wsdlsoap:fault use="encoded" name="InvalidOperationFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidSessionFault">
+        <wsdlsoap:fault use="encoded" name="InvalidSessionFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchObjectFault">
+        <wsdlsoap:fault use="encoded" name="NoSuchObjectFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="PermissionDeniedFault">
+        <wsdlsoap:fault use="encoded" name="PermissionDeniedFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="SystemFault">
+        <wsdlsoap:fault use="encoded" name="SystemFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="IllegalArgumentFault">
+        <wsdlsoap:fault use="encoded" name="IllegalArgumentFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="VersionMismatchFault">
+        <wsdlsoap:fault use="encoded" name="VersionMismatchFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="DependencyViolationFault">
+        <wsdlsoap:fault use="encoded" name="DependencyViolationFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="copyWorkflowTransitions">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="copyWorkflowTransitionsRequest">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="copyWorkflowTransitionsResponse">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="NoSuchObjectFault">
+        <wsdlsoap:fault use="encoded" name="NoSuchObjectFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidSessionFault">
+        <wsdlsoap:fault use="encoded" name="InvalidSessionFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="PermissionDeniedFault">
+        <wsdlsoap:fault use="encoded" name="PermissionDeniedFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="SystemFault">
+        <wsdlsoap:fault use="encoded" name="SystemFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="WorkflowViolationFault">
+        <wsdlsoap:fault use="encoded" name="WorkflowViolationFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createArtifact">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="createArtifactRequest">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="createArtifactResponse">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="NoSuchObjectFault">
+        <wsdlsoap:fault use="encoded" name="NoSuchObjectFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidSessionFault">
+        <wsdlsoap:fault use="encoded" name="InvalidSessionFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="PermissionDeniedFault">
+        <wsdlsoap:fault use="encoded" name="PermissionDeniedFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="IllegalArgumentFault">
+        <wsdlsoap:fault use="encoded" name="IllegalArgumentFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="SystemFault">
+        <wsdlsoap:fault use="encoded" name="SystemFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getArtifactData">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getArtifactDataRequest">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getArtifactDataResponse">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="NoSuchObjectFault">
+        <wsdlsoap:fault use="encoded" name="NoSuchObjectFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidSessionFault">
+        <wsdlsoap:fault use="encoded" name="InvalidSessionFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="PermissionDeniedFault">
+        <wsdlsoap:fault use="encoded" name="PermissionDeniedFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="SystemFault">
+        <wsdlsoap:fault use="encoded" name="SystemFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setArtifactData">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="setArtifactDataRequest">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="setArtifactDataResponse">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="NoSuchObjectFault">
+        <wsdlsoap:fault use="encoded" name="NoSuchObjectFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidSessionFault">
+        <wsdlsoap:fault use="encoded" name="InvalidSessionFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="PermissionDeniedFault">
+        <wsdlsoap:fault use="encoded" name="PermissionDeniedFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="SystemFault">
+        <wsdlsoap:fault use="encoded" name="SystemFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="IllegalArgumentFault">
+        <wsdlsoap:fault use="encoded" name="IllegalArgumentFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="VersionMismatchFault">
+        <wsdlsoap:fault use="encoded" name="VersionMismatchFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="WorkflowViolationFault">
+        <wsdlsoap:fault use="encoded" name="WorkflowViolationFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="DependencyViolationFault">
+        <wsdlsoap:fault use="encoded" name="DependencyViolationFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteField">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="deleteFieldRequest">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="deleteFieldResponse">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="InvalidOperationFault">
+        <wsdlsoap:fault use="encoded" name="InvalidOperationFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidSessionFault">
+        <wsdlsoap:fault use="encoded" name="InvalidSessionFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchObjectFault">
+        <wsdlsoap:fault use="encoded" name="NoSuchObjectFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="PermissionDeniedFault">
+        <wsdlsoap:fault use="encoded" name="PermissionDeniedFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="SystemFault">
+        <wsdlsoap:fault use="encoded" name="SystemFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTrackerData">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getTrackerDataRequest">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getTrackerDataResponse">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="NoSuchObjectFault">
+        <wsdlsoap:fault use="encoded" name="NoSuchObjectFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidSessionFault">
+        <wsdlsoap:fault use="encoded" name="InvalidSessionFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="PermissionDeniedFault">
+        <wsdlsoap:fault use="encoded" name="PermissionDeniedFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="SystemFault">
+        <wsdlsoap:fault use="encoded" name="SystemFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setTrackerData">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="setTrackerDataRequest">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="setTrackerDataResponse">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="NoSuchObjectFault">
+        <wsdlsoap:fault use="encoded" name="NoSuchObjectFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidSessionFault">
+        <wsdlsoap:fault use="encoded" name="InvalidSessionFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="PermissionDeniedFault">
+        <wsdlsoap:fault use="encoded" name="PermissionDeniedFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="IllegalArgumentFault">
+        <wsdlsoap:fault use="encoded" name="IllegalArgumentFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="SystemFault">
+        <wsdlsoap:fault use="encoded" name="SystemFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="VersionMismatchFault">
+        <wsdlsoap:fault use="encoded" name="VersionMismatchFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addDateField">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="addDateFieldRequest">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="addDateFieldResponse">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="InvalidOperationFault">
+        <wsdlsoap:fault use="encoded" name="InvalidOperationFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidSessionFault">
+        <wsdlsoap:fault use="encoded" name="InvalidSessionFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchObjectFault">
+        <wsdlsoap:fault use="encoded" name="NoSuchObjectFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="PermissionDeniedFault">
+        <wsdlsoap:fault use="encoded" name="PermissionDeniedFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="SystemFault">
+        <wsdlsoap:fault use="encoded" name="SystemFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="IllegalArgumentFault">
+        <wsdlsoap:fault use="encoded" name="IllegalArgumentFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="VersionMismatchFault">
+        <wsdlsoap:fault use="encoded" name="VersionMismatchFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteArtifact">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="deleteArtifactRequest">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="deleteArtifactResponse">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="NoSuchObjectFault">
+        <wsdlsoap:fault use="encoded" name="NoSuchObjectFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidSessionFault">
+        <wsdlsoap:fault use="encoded" name="InvalidSessionFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="PermissionDeniedFault">
+        <wsdlsoap:fault use="encoded" name="PermissionDeniedFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="SystemFault">
+        <wsdlsoap:fault use="encoded" name="SystemFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="moveArtifact">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="moveArtifactRequest">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="moveArtifactResponse">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="NoSuchObjectFault">
+        <wsdlsoap:fault use="encoded" name="NoSuchObjectFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidSessionFault">
+        <wsdlsoap:fault use="encoded" name="InvalidSessionFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="PermissionDeniedFault">
+        <wsdlsoap:fault use="encoded" name="PermissionDeniedFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="IllegalArgumentFault">
+        <wsdlsoap:fault use="encoded" name="IllegalArgumentFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="SystemFault">
+        <wsdlsoap:fault use="encoded" name="SystemFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getParentDependencyList">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getParentDependencyListRequest">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getParentDependencyListResponse">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="NoSuchObjectFault">
+        <wsdlsoap:fault use="encoded" name="NoSuchObjectFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidSessionFault">
+        <wsdlsoap:fault use="encoded" name="InvalidSessionFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="PermissionDeniedFault">
+        <wsdlsoap:fault use="encoded" name="PermissionDeniedFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="SystemFault">
+        <wsdlsoap:fault use="encoded" name="SystemFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="WorkflowViolationFault">
+        <wsdlsoap:fault use="encoded" name="WorkflowViolationFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getChildDependencyList">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getChildDependencyListRequest">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getChildDependencyListResponse">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="NoSuchObjectFault">
+        <wsdlsoap:fault use="encoded" name="NoSuchObjectFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidSessionFault">
+        <wsdlsoap:fault use="encoded" name="InvalidSessionFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="PermissionDeniedFault">
+        <wsdlsoap:fault use="encoded" name="PermissionDeniedFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="SystemFault">
+        <wsdlsoap:fault use="encoded" name="SystemFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="WorkflowViolationFault">
+        <wsdlsoap:fault use="encoded" name="WorkflowViolationFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createTracker">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="createTrackerRequest">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="createTrackerResponse">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="ObjectAlreadyExistsFault">
+        <wsdlsoap:fault use="encoded" name="ObjectAlreadyExistsFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchObjectFault">
+        <wsdlsoap:fault use="encoded" name="NoSuchObjectFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidSessionFault">
+        <wsdlsoap:fault use="encoded" name="InvalidSessionFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="PermissionDeniedFault">
+        <wsdlsoap:fault use="encoded" name="PermissionDeniedFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="SystemFault">
+        <wsdlsoap:fault use="encoded" name="SystemFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTrackerList">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getTrackerListRequest">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getTrackerListResponse">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="NoSuchObjectFault">
+        <wsdlsoap:fault use="encoded" name="NoSuchObjectFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidSessionFault">
+        <wsdlsoap:fault use="encoded" name="InvalidSessionFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="PermissionDeniedFault">
+        <wsdlsoap:fault use="encoded" name="PermissionDeniedFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="SystemFault">
+        <wsdlsoap:fault use="encoded" name="SystemFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addTextField">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="addTextFieldRequest">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="addTextFieldResponse">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="InvalidOperationFault">
+        <wsdlsoap:fault use="encoded" name="InvalidOperationFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidSessionFault">
+        <wsdlsoap:fault use="encoded" name="InvalidSessionFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchObjectFault">
+        <wsdlsoap:fault use="encoded" name="NoSuchObjectFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="PermissionDeniedFault">
+        <wsdlsoap:fault use="encoded" name="PermissionDeniedFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="SystemFault">
+        <wsdlsoap:fault use="encoded" name="SystemFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="IllegalArgumentFault">
+        <wsdlsoap:fault use="encoded" name="IllegalArgumentFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="VersionMismatchFault">
+        <wsdlsoap:fault use="encoded" name="VersionMismatchFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addSingleSelectField">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="addSingleSelectFieldRequest">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="addSingleSelectFieldResponse">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="InvalidOperationFault">
+        <wsdlsoap:fault use="encoded" name="InvalidOperationFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidSessionFault">
+        <wsdlsoap:fault use="encoded" name="InvalidSessionFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchObjectFault">
+        <wsdlsoap:fault use="encoded" name="NoSuchObjectFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="PermissionDeniedFault">
+        <wsdlsoap:fault use="encoded" name="PermissionDeniedFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="SystemFault">
+        <wsdlsoap:fault use="encoded" name="SystemFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="IllegalArgumentFault">
+        <wsdlsoap:fault use="encoded" name="IllegalArgumentFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="VersionMismatchFault">
+        <wsdlsoap:fault use="encoded" name="VersionMismatchFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addMultiSelectField">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="addMultiSelectFieldRequest">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="addMultiSelectFieldResponse">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="InvalidOperationFault">
+        <wsdlsoap:fault use="encoded" name="InvalidOperationFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidSessionFault">
+        <wsdlsoap:fault use="encoded" name="InvalidSessionFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchObjectFault">
+        <wsdlsoap:fault use="encoded" name="NoSuchObjectFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="PermissionDeniedFault">
+        <wsdlsoap:fault use="encoded" name="PermissionDeniedFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="SystemFault">
+        <wsdlsoap:fault use="encoded" name="SystemFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="IllegalArgumentFault">
+        <wsdlsoap:fault use="encoded" name="IllegalArgumentFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="VersionMismatchFault">
+        <wsdlsoap:fault use="encoded" name="VersionMismatchFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addUserSelectField">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="addUserSelectFieldRequest">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="addUserSelectFieldResponse">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="InvalidOperationFault">
+        <wsdlsoap:fault use="encoded" name="InvalidOperationFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidSessionFault">
+        <wsdlsoap:fault use="encoded" name="InvalidSessionFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchObjectFault">
+        <wsdlsoap:fault use="encoded" name="NoSuchObjectFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="PermissionDeniedFault">
+        <wsdlsoap:fault use="encoded" name="PermissionDeniedFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="SystemFault">
+        <wsdlsoap:fault use="encoded" name="SystemFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="IllegalArgumentFault">
+        <wsdlsoap:fault use="encoded" name="IllegalArgumentFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="VersionMismatchFault">
+        <wsdlsoap:fault use="encoded" name="VersionMismatchFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getArtifactList">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getArtifactListRequest">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getArtifactListResponse">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="NoSuchObjectFault">
+        <wsdlsoap:fault use="encoded" name="NoSuchObjectFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidSessionFault">
+        <wsdlsoap:fault use="encoded" name="InvalidSessionFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="PermissionDeniedFault">
+        <wsdlsoap:fault use="encoded" name="PermissionDeniedFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="SystemFault">
+        <wsdlsoap:fault use="encoded" name="SystemFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidFilterFault">
+        <wsdlsoap:fault use="encoded" name="InvalidFilterFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getArtifactDetailList">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getArtifactDetailListRequest">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getArtifactDetailListResponse">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="NoSuchObjectFault">
+        <wsdlsoap:fault use="encoded" name="NoSuchObjectFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidSessionFault">
+        <wsdlsoap:fault use="encoded" name="InvalidSessionFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="PermissionDeniedFault">
+        <wsdlsoap:fault use="encoded" name="PermissionDeniedFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="SystemFault">
+        <wsdlsoap:fault use="encoded" name="SystemFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidFilterFault">
+        <wsdlsoap:fault use="encoded" name="InvalidFilterFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="findArtifacts">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="findArtifactsRequest">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="findArtifactsResponse">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="NoSuchObjectFault">
+        <wsdlsoap:fault use="encoded" name="NoSuchObjectFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidSessionFault">
+        <wsdlsoap:fault use="encoded" name="InvalidSessionFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="IllegalArgumentFault">
+        <wsdlsoap:fault use="encoded" name="IllegalArgumentFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="SystemFault">
+        <wsdlsoap:fault use="encoded" name="SystemFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="SearchQuerySyntaxFault">
+        <wsdlsoap:fault use="encoded" name="SearchQuerySyntaxFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAllowedWorkflowTransitionList">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getAllowedWorkflowTransitionListRequest">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getAllowedWorkflowTransitionListResponse">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="NoSuchObjectFault">
+        <wsdlsoap:fault use="encoded" name="NoSuchObjectFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidSessionFault">
+        <wsdlsoap:fault use="encoded" name="InvalidSessionFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="SystemFault">
+        <wsdlsoap:fault use="encoded" name="SystemFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createArtifactDependency">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="createArtifactDependencyRequest">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="createArtifactDependencyResponse">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="NoSuchObjectFault">
+        <wsdlsoap:fault use="encoded" name="NoSuchObjectFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidSessionFault">
+        <wsdlsoap:fault use="encoded" name="InvalidSessionFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="PermissionDeniedFault">
+        <wsdlsoap:fault use="encoded" name="PermissionDeniedFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="SystemFault">
+        <wsdlsoap:fault use="encoded" name="SystemFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="WorkflowViolationFault">
+        <wsdlsoap:fault use="encoded" name="WorkflowViolationFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="DependencyViolationFault">
+        <wsdlsoap:fault use="encoded" name="DependencyViolationFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="removeArtifactDependency">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="removeArtifactDependencyRequest">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="removeArtifactDependencyResponse">
+        <wsdlsoap:body use="encoded" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="NoSuchRelationshipFault">
+        <wsdlsoap:fault use="encoded" name="NoSuchRelationshipFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="NoSuchObjectFault">
+        <wsdlsoap:fault use="encoded" name="NoSuchObjectFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidSessionFault">
+        <wsdlsoap:fault use="encoded" name="InvalidSessionFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="PermissionDeniedFault">
+        <wsdlsoap:fault use="encoded" name="PermissionDeniedFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="SystemFault">
+        <wsdlsoap:fault use="encoded" name="SystemFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="WorkflowViolationFault">
+        <wsdlsoap:fault use="encoded" name="WorkflowViolationFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+      <wsdl:fault name="DependencyViolationFault">
+        <wsdlsoap:fault use="encoded" name="DependencyViolationFault" namespace="http://schema.open.collab.net/sfee50/soap50/service" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TrackerAppSoapService">
+    <wsdl:port name="TrackerApp" binding="impl:TrackerAppSoapBinding">
+      <wsdlsoap:address location="http://localhost:8080/ce-soap50/services/TrackerApp" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
